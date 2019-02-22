@@ -52,7 +52,6 @@ const gfmEscapeCharacters = []string{"\\", "`", "*", "{", "}", "[", "]", "(", ")
 func escapeMarkdown(input string) string {
 	for _, s := range gfmEscapeCharacters {
 		input = strings.Replace(input, s, "\\" + s, -1)
-		fmt.Println(input)
 	}
 	return input
 }
@@ -60,7 +59,7 @@ func escapeMarkdown(input string) string {
 func gitRelWorkdir() (string, error) {
 	b, err := exec.Command("git", "rev-parse", "--show-prefix").Output()
 	if err != nil {
-		return "", fmt.Errorf("failed to run "git rev-parse --show-prefix": %v", err)
+		return "", fmt.Errorf("failed to run 'git rev-parse --show-prefix': %v", err)
 	}
 	return strings.Trim(string(b), "\n"), nil
 }
