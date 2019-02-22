@@ -52,6 +52,7 @@ const gfmEscapeCharacters = []string{"\\", "`", "*", "{", "}", "[", "]", "(", ")
 func escapeMarkdown(input string) string {
 	for _, s := range gfmEscapeCharacters {
 		input = strings.Replace(input, s, "\\" + s, -1)
+		fmt.Println(input)
 	}
 	return input
 }
