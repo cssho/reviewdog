@@ -48,9 +48,8 @@ func commentBody(c *Comment) string {
 	return tool + bodyPrefix + "\n" + escapeMarkdown(c.Body)
 }
 
-const gfmEscapeCharacters = []string{"\\", "`", "*", "{", "}", "[", "]", "(", ")", "#", "+", "-", ".", "!", "_", ">"}
 func escapeMarkdown(input string) string {
-	for _, s := range gfmEscapeCharacters {
+	for _, s := range []string{"\\", "`", "*", "{", "}", "[", "]", "(", ")", "#", "+", "-", ".", "!", "_", ">"} {
 		input = strings.Replace(input, s, "\\" + s, -1)
 	}
 	return input
