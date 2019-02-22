@@ -45,13 +45,21 @@ func commentBody(c *Comment) string {
 	if c.ToolName != "" {
 		tool = fmt.Sprintf("**[%s]** ", c.ToolName)
 	}
-	return tool + bodyPrefix + "\n" + c.Body
+	return tool + bodyPrefix + "\n" + escapeMarkdown(c.Body)
+}
+
+const gfmEscapeCharacters = []string{"\\", "`", "*", "{", "}", "[", "]", "(", ")", "#", "+", "-", ".", "!", "_", ">"}
+func escapeMarkdown(input string) string {
+	for _, s := range gfmEscapeCharacters {
+		input = strings.Replace(input, s, "\\" + s, -1)
+	}
+	return input
 }
 
 func gitRelWorkdir() (string, error) {
 	b, err := exec.Command("git", "rev-parse", "--show-prefix").Output()
 	if err != nil {
-		return "", fmt.Errorf("failed to run 'git rev-parse --show-prefix': %v", err)
+		return "", fmt.Errorf("failed to run "git rev-parse --show-prefix": %v", err)
 	}
 	return strings.Trim(string(b), "\n"), nil
 }
